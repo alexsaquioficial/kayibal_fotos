@@ -1,0 +1,57 @@
+:root {
+  --fondo: #f5f7fb; --tarjeta: #fff; --texto: #101828; --suave: #667085; --borde: #e4e7ec;
+  --primario: #2563eb; --primario-suave: #eff6ff; --peligro: #b42318;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--texto);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --fondo: #0b1220; --tarjeta: #111a2e; --texto: #e6e9f0; --suave: #98a2b3; --borde: #243049; --primario-suave: #172554; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); }
+.app { display: grid; gap: 16px; width: min(1100px, 100%); margin: 0 auto; padding: 20px 16px 100px; }
+.app__cabecera { display: flex; gap: 12px; align-items: center; }
+.app__cabecera h1 { margin: 0; font-size: 1.3rem; }
+.app__cabecera p { margin: 2px 0 0; color: var(--suave); font-size: .85rem; }
+
+.subir { position: relative; display: grid; justify-items: center; gap: 6px; padding: 48px 16px; border: 2px dashed var(--borde); border-radius: 18px; background: var(--tarjeta); text-align: center; cursor: pointer; transition: border-color .15s, background .15s; }
+.subir input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.subir--encima, .subir:hover { border-color: var(--primario); background: var(--primario-suave); }
+.subir--chico { grid-auto-flow: column; justify-content: center; align-items: center; gap: 10px; padding: 14px; }
+.subir__icono { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--primario); color: #fff; font-size: 1.5rem; }
+.subir--chico .subir__icono { width: 30px; height: 30px; font-size: 1.1rem; }
+.subir small { color: var(--suave); }
+
+.opciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.opcion { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid var(--borde); border-radius: 999px; background: var(--tarjeta); font-size: .85rem; }
+.opcion select { border: 0; background: transparent; color: inherit; font: inherit; }
+.opcion--rango input { width: 100px; }
+
+.progreso { display: grid; gap: 6px; padding: 12px 14px; border-radius: 12px; background: var(--primario-suave); font-size: .85rem; }
+.progreso__barra { height: 6px; border-radius: 999px; background: var(--borde); overflow: hidden; }
+.progreso__barra div { height: 100%; background: var(--primario); transition: width .2s; }
+
+.fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.foto { display: grid; overflow: hidden; border: 1px solid var(--borde); border-radius: 16px; background: var(--tarjeta); }
+.foto__espera { position: relative; aspect-ratio: 1; background: #f2f4f7; }
+.foto__espera img { width: 100%; height: 100%; object-fit: contain; opacity: .55; }
+.foto__espera span { position: absolute; inset: auto 0 12px; text-align: center; font-weight: 700; color: #344054; }
+.foto__pie { display: grid; gap: 8px; padding: 10px 12px 12px; }
+.foto__pie small { overflow: hidden; color: var(--suave); text-overflow: ellipsis; white-space: nowrap; }
+.foto__error { margin: 0; color: var(--peligro); font-size: .8rem; }
+.elegir { display: flex; gap: 6px; }
+.elegir button { flex: 1; min-height: 36px; border: 1px solid var(--borde); border-radius: 10px; background: transparent; color: inherit; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; }
+.elegir button.activo { border-color: var(--primario); background: var(--primario); color: #fff; }
+.elegir .quitar { flex: 0 0 36px; color: var(--peligro); }
+
+.comparador { position: relative; aspect-ratio: 1; overflow: hidden; background: #fff; user-select: none; }
+.comparador img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.comparador__antes { position: absolute; inset: 0; background: #f2f4f7; }
+.comparador__linea { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1px; background: var(--primario); box-shadow: 0 0 0 1px #fff; pointer-events: none; }
+.comparador__etiqueta { position: absolute; top: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(16,24,40,.6); color: #fff; font-size: .7rem; pointer-events: none; }
+.comparador__etiqueta--izq { left: 8px; }
+.comparador__etiqueta--der { right: 8px; }
+.comparador input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+
+.acciones { position: fixed; inset: auto 0 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px max(16px, calc((100% - 1100px) / 2 + 16px)); border-top: 1px solid var(--borde); background: var(--tarjeta); box-shadow: 0 -6px 20px rgba(16,24,40,.08); }
+.boton { min-height: 46px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--primario); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.boton:disabled { opacity: .5; cursor: default; }
