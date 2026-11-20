@@ -1,0 +1,4 @@
+# El modelo no cambia (cada pedazo tiene su huella en el nombre): se guarda un año.
+/modelo/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *

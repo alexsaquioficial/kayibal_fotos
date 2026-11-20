@@ -1,0 +1,4 @@
+node_modules
+dist
+# El modelo se copia desde node_modules (scripts/copiar-modelo.mjs).
+public/modelo
