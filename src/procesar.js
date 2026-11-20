@@ -19,12 +19,25 @@ export const OPCIONES_INICIALES = {
   calidad: "normal", // "normal" (rápido) | "alta" (más lento, mejor borde)
 };
 
-// Devuelve el producto con fondo transparente (Blob PNG).
-// alProgreso(texto, porcentaje): la primera vez descarga el modelo.
-export async function quitarFondo(archivo, calidad, alProgreso) {
-  return removeBackground(archivo, {
+// Achica la foto antes de quitar el fondo: las de celular (12 MP) agotan la
+// memoria del iPhone y tardan mucho. El resultado final es de 1000×1000,
+// así que no se pierde calidad.
+async function achicar(archivo, maximo) {
+  const imagen = await createImageBitmap(archivo);
+  const escala = Math.min(1, maximo / Math.max(imagen.width, imagen.height));
+  const lienzo = document.createElement("canvas");
+  lienzo.width = Math.round(imagen.width * escala);
+  lienzo.height = Math.round(imagen.height * escala);
+  lienzo.getContext("2d").drawImage(imagen, 0, 0, lienzo.width, lienzo.height);
+  imagen.close?.();
+  return new Promise((r) => lienzo.toBlob(r, "image/jpeg", 0.92));
+}
+
+function quitarFondoUnaVez(foto, calidad, alProgreso, enSegundoPlano) {
+  return removeBackground(foto, {
     publicPath: `${window.location.origin}/modelo/`,
     model: calidad === "alta" ? "medium" : "small",
+    proxyToWorker: enSegundoPlano,
     output: { format: "image/png" },
     progress: (clave, actual, total) => {
       if (!total) return;
@@ -32,6 +45,28 @@ export async function quitarFondo(archivo, calidad, alProgreso) {
       alProgreso?.(descargando ? "Descargando el recortador (solo la primera vez)" : "Quitando el fondo", Math.round((actual / total) * 100));
     },
   });
+}
+
+// Devuelve el producto con fondo transparente (Blob PNG).
+// alProgreso(texto, porcentaje): la primera vez descarga el modelo.
+// Si falla (celulares con poca memoria, iPhone), reintenta más liviano.
+export async function quitarFondo(archivo, calidad, alProgreso) {
+  const intentos = [
+    { maximo: 1280, calidad, segundoPlano: true },
+    { maximo: 1024, calidad: "normal", segundoPlano: false },
+    { maximo: 720, calidad: "normal", segundoPlano: false },
+  ];
+  let ultimoError;
+  for (const intento of intentos) {
+    try {
+      const foto = await achicar(archivo, intento.maximo);
+      return await quitarFondoUnaVez(foto, intento.calidad, alProgreso, intento.segundoPlano);
+    } catch (error) {
+      console.warn("Reintentando más liviano:", error);
+      ultimoError = error;
+    }
+  }
+  throw ultimoError;
 }
 
 export const cargarImagen = (blob) => createImageBitmap(blob);
