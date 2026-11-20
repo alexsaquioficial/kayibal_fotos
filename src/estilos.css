@@ -57,3 +57,4 @@ body { margin: 0; background: var(--fondo); }
 .boton:disabled { opacity: .5; cursor: default; }
 .app__pie { margin: 8px 0 0; color: var(--suave); font-size: .75rem; text-align: center; }
 .app__pie a { color: var(--primario); }
+.foto__detalle { display: block; margin-top: 4px; color: var(--suave); font-size: .7rem; word-break: break-word; }

@@ -51,7 +51,7 @@ export default function App() {
         cambiarFoto(siguiente.id, { estado: "listo", original, producto, recortado: opciones.quitarFondo });
       } catch (error) {
         console.error(error);
-        cambiarFoto(siguiente.id, { estado: "error", usar: "original", error: "No se pudo mejorar esta foto en este aparato. Puedes usar la original." });
+        cambiarFoto(siguiente.id, { estado: "error", usar: "original", error: "No se pudo mejorar esta foto en este aparato. Puedes usar la original.", detalle: String(error?.message || error).slice(0, 160) });
       } finally {
         setProgreso(null);
         ocupado.current = false;
@@ -162,7 +162,7 @@ export default function App() {
             )}
             <div className="foto__pie">
               <small title={f.nombre}>{f.nombre}</small>
-              {f.error && <p className="foto__error">{f.error}</p>}
+              {f.error && <p className="foto__error">{f.error}{f.detalle && <small className="foto__detalle">Detalle: {f.detalle}</small>}</p>}
               {(f.estado === "listo" || f.estado === "error") && (
                 <div className="elegir" role="radiogroup" aria-label="Qué foto usar">
                   {f.estado === "listo" && (
