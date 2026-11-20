@@ -177,6 +177,11 @@ export default function App() {
         ))}
       </ul>
 
+      <p className="app__pie">
+        Kayibal Fotos es software libre (AGPL-3.0).{" "}
+        <a href="https://github.com/alexsaquioficial/kayibal_fotos" target="_blank" rel="noreferrer">Código fuente</a>
+      </p>
+
       {listas > 0 && (
         <footer className="acciones">
           <span>{pendientes ? `Faltan ${pendientes}…` : `${listas} ${listas === 1 ? "foto lista" : "fotos listas"}`}</span>

@@ -38,8 +38,18 @@ Solo habla con `kayibal.com` (y `localhost` para pruebas).
 - Comando de build: `npm run build` · Carpeta: `dist`
 - Dominio: `fotos.kayibal.com`
 
-## Licencia del recortador
+## Licencia
 
-`@imgly/background-removal` es **AGPL-3.0**: si se usa en un servicio, el código de
-este proyecto debe poder verse (repositorio público) o comprar la licencia comercial
-de IMG.LY. Por eso este proyecto va aparte del sistema principal.
+Este proyecto es **público y libre (AGPL-3.0, ver `LICENSE.md`)**, porque usa
+`@imgly/background-removal`, que tiene esa licencia. La página muestra el enlace
+«Código fuente», como pide la licencia.
+
+**Está separado a propósito del resto de Kayibal** (API, panel, admin y tienda web,
+que siguen privados):
+
+- No comparte código con ellos ni los importa.
+- No tiene contraseñas, llaves ni datos de tiendas: todo pasa en el navegador.
+- Con el panel solo se comunica enviando y recibiendo fotos (`postMessage`,
+  ver arriba), como dos programas distintos.
+
+No agregues aquí código del sistema principal ni datos privados.

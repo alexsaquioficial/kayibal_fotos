@@ -55,3 +55,5 @@ body { margin: 0; background: var(--fondo); }
 .acciones { position: fixed; inset: auto 0 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px max(16px, calc((100% - 1100px) / 2 + 16px)); border-top: 1px solid var(--borde); background: var(--tarjeta); box-shadow: 0 -6px 20px rgba(16,24,40,.08); }
 .boton { min-height: 46px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--primario); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
 .boton:disabled { opacity: .5; cursor: default; }
+.app__pie { margin: 8px 0 0; color: var(--suave); font-size: .75rem; text-align: center; }
+.app__pie a { color: var(--primario); }
