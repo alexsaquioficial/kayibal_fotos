@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { OPCIONES_INICIALES, aArchivo, cargarImagen, componer, quitarFondo } from "./procesar";
 import { abiertoDesdeKayibal, enviarAKayibal, escucharKayibal } from "./kayibal";
 import Comparador from "./Comparador";
+import { prepararRecortador } from "./descarga";
+
+const MB = (b) => (b / 1048576).toFixed(1);
 
 let siguienteId = 1;
 
@@ -45,6 +48,9 @@ export default function App() {
         const original = await cargarImagen(siguiente.archivo);
         let producto = original;
         if (opciones.quitarFondo) {
+          // Primero el recortador completo, con barra (solo la primera vez).
+          await prepararRecortador(opciones.calidad, ({ bajado, total, porcentaje }) =>
+            setProgreso({ texto: `Descargando el recortador (solo la primera vez): ${MB(bajado)} de ${MB(total)} MB`, porcentaje }));
           const sinFondo = await quitarFondo(siguiente.archivo, opciones.calidad, (texto, porcentaje) => setProgreso({ texto, porcentaje }));
           producto = await cargarImagen(sinFondo);
         }
@@ -144,7 +150,7 @@ export default function App() {
 
       {progreso && (
         <div className="progreso" role="status">
-          <span>{progreso.texto}… {progreso.porcentaje}%</span>
+          <span className="progreso__texto"><span>{progreso.texto}</span><strong>{progreso.porcentaje}%</strong></span>
           <div className="progreso__barra"><div style={{ width: `${progreso.porcentaje}%` }} /></div>
         </div>
       )}

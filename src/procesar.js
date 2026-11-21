@@ -41,8 +41,8 @@ function quitarFondoUnaVez(foto, calidad, alProgreso, enSegundoPlano) {
     output: { format: "image/png" },
     progress: (clave, actual, total) => {
       if (!total) return;
-      const descargando = clave.startsWith("fetch:");
-      alProgreso?.(descargando ? "Descargando el recortador (solo la primera vez)" : "Quitando el fondo", Math.round((actual / total) * 100));
+      // La descarga ya se hizo con barra (descarga.js); aquí solo el recorte.
+      if (!clave.startsWith("fetch:")) alProgreso?.("Quitando el fondo", Math.round((actual / total) * 100));
     },
   });
 }

@@ -58,3 +58,5 @@ body { margin: 0; background: var(--fondo); }
 .app__pie { margin: 8px 0 0; color: var(--suave); font-size: .75rem; text-align: center; }
 .app__pie a { color: var(--primario); }
 .foto__detalle { display: block; margin-top: 4px; color: var(--suave); font-size: .7rem; word-break: break-word; }
+.progreso__texto { display: flex; justify-content: space-between; gap: 10px; }
+.progreso__barra { height: 10px; }
